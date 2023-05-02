@@ -1,0 +1,31 @@
+<div class="container">
+  <h2>Airport Details</h2>
+
+  <form [formGroup]="airportForm">
+    <div>
+      <label> Subtype: </label>
+      <input type="text" formControlName="subType">
+    </div>
+    <div>
+      <label> Name: </label>
+      <input type="text" formControlName="name">
+    </div>
+    <div>
+      <label> Detailed Name:</label>
+      <input type="text" formControlName="detailedName">
+    </div>
+    <div>
+      <label>City Name: </label>
+      <input type="text" formControlName="cityName">
+    </div>
+    <div>
+      <label>Country: </label>
+      <input type="text" formControlName="countryName">
+    </div>
+    <div>
+      <button routerLink="/search">Back</button>
+      <button (click)="saveToLocalStorage()">Save</button>
+    </div>
+
+  </form>
+</div>

@@ -1,0 +1,9 @@
+<div class="container">
+  <ul class="list" *ngIf="airports && airports.length">
+    <ng-container *ngFor="let airport of airports">
+      <li> {{airport.address.cityName}} - {{airport.name}}
+        <button type="button" class="border" [routerLink]="['/airport-detail', airport.id]">Details</button>
+      </li>
+    </ng-container>
+  </ul>
+</div>
