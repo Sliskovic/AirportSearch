@@ -11,7 +11,7 @@ import { AirportDetailDTO } from 'src/app/shared/interface/airportDetail.interfa
 })
 export class AirportDetailComponent implements OnInit {
   isLoading: boolean = false;
-
+  isStored: boolean = false;
   airport!: AirportDetailDTO;
   airportForm!: FormGroup;
 
@@ -25,13 +25,14 @@ export class AirportDetailComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     this.initForm();
     this.isInLocalSorage(id as string);
-    if(id !==':id')
+    if(id !==':id' && !this.isStored)
     this.loadDeatailsFromApi(id as string)
     
   }
   private isInLocalSorage(id: string) {
     const storedData = localStorage.getItem(`airport-${id}`);
     if (storedData) {
+      this.isStored = true;
       const airport = JSON.parse(storedData);
       this.airportForm.patchValue(airport);
     }
