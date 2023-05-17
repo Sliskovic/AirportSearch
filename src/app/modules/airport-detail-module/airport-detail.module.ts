@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AirportDetailComponent } from './airport-detail/airport-detail.component';
 import { AirportDetailRoutingModule } from './airport-detail-routing.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 
@@ -15,7 +16,8 @@ import { AirportDetailRoutingModule } from './airport-detail-routing.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    AirportDetailRoutingModule
+    AirportDetailRoutingModule,
+    SharedModule
   ]
 })
 export class AirportDetailModule { }

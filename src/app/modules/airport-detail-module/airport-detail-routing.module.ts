@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+
 import { AirportDetailComponent } from "./airport-detail/airport-detail.component";
 
 const routes: Routes = [

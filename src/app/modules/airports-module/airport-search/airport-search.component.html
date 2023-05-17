@@ -7,6 +7,7 @@
     
     <div class="invalid-feedback" *ngIf="cityName.touched || cityName.dirty">
       <strong *ngIf="cityName.errors?.['required']">Za pretragu zračnih luka upišite ime grada</strong>
+      <strong *ngIf="cityName.errors?.['minlength']">Ime grada mora imati najmanje 3 znaka</strong>
     </div>
     <div class="invalid-feedback" *ngIf="noResultsFound">
       <span>Za upisan pojam nema rezultata.</span>
@@ -14,5 +15,7 @@
     
   </form>
 </div>
-
-<app-airports-list [airports]="airports"></app-airports-list>
+<div class="results">
+  <app-airports-list [airports]="airports" [topAirports]="topAirports"></app-airports-list>
+  <app-airports-top10 [topAirports]="topAirports"></app-airports-top10>
+</div>

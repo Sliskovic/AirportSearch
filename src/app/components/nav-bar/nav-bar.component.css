@@ -5,13 +5,13 @@ nav {
     box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1), 0px 1px 0px #d6dee4;
     z-index: 1000;
 }
-nav ul.nav {
+ ul.nav {
     display: flex;
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
-nav ul.nav li.link {
+ li.link {
     display: flex;
     margin-right: 15px;
     background: #f9fbfc;
@@ -22,24 +22,22 @@ nav ul.nav li.link {
     cursor: pointer;
     align-items: center;
 }
-nav ul.nav li.link button.nav-link {
+ button.nav-link {
     font-weight: 700;
     font-size: 14px;
     line-height: 18px;
     color: #2c3033;
+    border: none;
+    background-color: inherit;
 }
-nav ul.nav li.link:last-of-type {
+ li.link:last-of-type {
     margin-right: 0;
 }
-nav ul.nav li.link:hover {
+ li.link:hover {
     cursor: pointer;
     background: #e2001a;
     border-color: #e2001a;
 }
-nav ul.nav li.link:hover button {
+ li.link:hover button {
     color: #fff;
-}
-button {
-    border: none;
-    background-color: inherit;
 }

@@ -1,17 +1,19 @@
 .container {
-    max-width: 60%;
-    margin: auto;
+    /* max-width: 60%; */
+    /* margin: auto; */
+    display: flex;
+    justify-content: center;
 }
 .list{
     margin-top:40px;
 }
-ul {
+ul, ol {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
-ul li {
+ul li, ol li {
     margin-bottom: 16px;
     display: flex;
     justify-content: space-between;
@@ -26,15 +28,23 @@ ul li button {
     padding: 8px 16px;
     background-color: #e2001a;
     color: #fff;
-    font-size: 16px;
-    font-weight: bold;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 18px;
 }
 
 ul li button:hover {
     background-color: #fff;
-    color: #e2001a;
-    border: 1px solid #e2001a;
+    color: #2c3033;
+    border: 1px solid #d6dee4;
 }
+ol li {
+   margin-left:50px;
+   margin-bottom: 0;
+}
+.top-airport {
+    color: red;
+  }

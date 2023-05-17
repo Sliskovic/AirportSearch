@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, of, switchMap, timeout } from 'rxjs';
-import { AirportSearchService } from 'src/app/shared/airport-search.service';
+
+import { AirportSearchHistoryService } from 'src/app/modules/airports-module/airport-search-history.service';
+import { AirportSearchService } from 'src/app/modules/airports-module/airport-search.service';
 import { AirportDTO } from 'src/app/shared/interface/airport.interface';
 
 @Component({
@@ -10,25 +12,32 @@ import { AirportDTO } from 'src/app/shared/interface/airport.interface';
   styleUrls: ['./airport-search.component.css'],
 })
 export class AirportSearchComponent implements OnInit {
-  isLoading = false;
   noResultsFound = false;
-  
   searchForm!: FormGroup;
   cityName!: FormControl;
   airports: AirportDTO[] = [];
+  topAirports: AirportDTO[] = [];
 
-  constructor( private airportService: AirportSearchService ) { }
+  constructor(private airportService: AirportSearchService, private airportSearchHistoryService: AirportSearchHistoryService) { }
 
   ngOnInit() {
-    this.cityName = new FormControl('', [Validators.required]);
+    this.cityName = new FormControl('', [Validators.required, Validators.minLength(2)]);
     this.searchForm = new FormGroup({
       cityName: this.cityName,
     });
   }
 
+  getTopAirports(): void {
+    this.topAirports = this.airportSearchHistoryService.getTopAirports();
+  }
+
   loadData(): void {
     const city: string = this.searchForm.value.cityName;
-    this.isCityValid(city);
+    
+    if (!city || city.length < 3) {
+      this.airports = [];
+      return;
+    }
     this.airportService
       .getAll(city)
       .pipe(
@@ -36,21 +45,14 @@ export class AirportSearchComponent implements OnInit {
         distinctUntilChanged(),
         timeout(5000),
         switchMap((airports: AirportDTO[]) => {
-          this.isLoading = false;
           return of(airports);
         })
       )
       .subscribe((airports: AirportDTO[]) => {
         this.airports = airports;
         this.noResultsFound = !Array.isArray(airports) || !airports.length;
+        this.getTopAirports();
       });
   }
 
-  isCityValid(cityName: string) {
-    if (!cityName) {
-      this.isLoading = false;
-      this.airports = [];
-      return;
-    }
-  }
 }

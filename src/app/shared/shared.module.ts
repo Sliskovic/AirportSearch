@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AirportSearchService } from './airport-search.service';
+import { AuthService } from './auth/auth.service';
+
 
 
 @NgModule({
@@ -9,6 +10,6 @@ import { AirportSearchService } from './airport-search.service';
   imports: [
     CommonModule
   ],
-  providers: [AirportSearchService],
+  providers: [AuthService],
 })
 export class SharedModule { }

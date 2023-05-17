@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { AirportSearchService } from 'src/app/shared/airport-search.service';
+
 import { AirportDetailDTO } from 'src/app/shared/interface/airportDetail.interface';
+import { AirportDetailService } from '../airport-detail.service';
 
 @Component({
   selector: 'app-airport-detail',
@@ -10,25 +11,24 @@ import { AirportDetailDTO } from 'src/app/shared/interface/airportDetail.interfa
   styleUrls: ['./airport-detail.component.css'],
 })
 export class AirportDetailComponent implements OnInit {
-  isLoading: boolean = false;
-  isStored: boolean = false;
+  isLoading = false;
+  isStored = false;
   airport!: AirportDetailDTO;
   airportForm!: FormGroup;
+  private routeId = this.route.snapshot.paramMap.get('id');
 
   constructor(
     private route: ActivatedRoute,
-    private airportService: AirportSearchService,
-    private formBuilder: FormBuilder
+    private airportDetailService: AirportDetailService,
   ) { }
 
   ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
     this.initForm();
-    this.isInLocalSorage(id as string);
-    if(id !==':id' && !this.isStored)
-    this.loadDeatailsFromApi(id as string)
-    
+    this.isInLocalSorage(this.routeId as string);
+    if (this.routeId !== ':id' && !this.isStored)
+      this.loadDeatailsFromApi(this.routeId as string)
   }
+
   private isInLocalSorage(id: string) {
     const storedData = localStorage.getItem(`airport-${id}`);
     if (storedData) {
@@ -39,11 +39,12 @@ export class AirportDetailComponent implements OnInit {
   }
 
   private loadDeatailsFromApi(id: string) {
-    this.airportService.getOne(id as string).subscribe((response: any) => {
-      this.airport = response.data;
+    this.airportDetailService.getOne(id).subscribe((response: AirportDetailDTO) => {
+      this.airport = response;
       this.setformValue();
     });
   }
+
   private setformValue() {
     this.airportForm.setValue({
       subType: this.airport.subType,
@@ -54,21 +55,12 @@ export class AirportDetailComponent implements OnInit {
       countryName: this.airport.address.countryName
     });
   }
-
   private initForm() {
-    this.airportForm = this.formBuilder.group({
-      subType: ['', Validators.required],
-      name: ['', Validators.required],
-      detailedName: ['', Validators.required],
-      id: ['', Validators.required],
-      cityName: ['', Validators.required],
-      countryName: ['', Validators.required]
-    });
+    this.airportForm = this.airportDetailService.createForm();
   }
 
-    saveToLocalStorage() {
-    const id = this.route.snapshot.paramMap.get('id');
-    localStorage.setItem(`airport-${id}`, JSON.stringify(this.airportForm.value))
+  saveToLocalStorage() {
+    localStorage.setItem(`airport-${this.routeId}`, JSON.stringify(this.airportForm.value));
     alert('Saved in LocalStorage');
   }
 }

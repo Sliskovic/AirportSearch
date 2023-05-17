@@ -1,5 +1,5 @@
 .container {
-  max-width: 600px;
+  max-width: 20%;
   margin: 0 auto;
 }
 
@@ -57,4 +57,9 @@ button:hover {
 }
 .is-invalid {
   border: 1px solid red;
+}
+.results{
+  display: flex;
+  justify-content: center;
+  /* align-items: top; */
 }
